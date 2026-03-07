@@ -1,15 +1,1340 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=https://github.com/interactivebench">
-  <link rel="canonical" href="https://github.com/interactivebench">
-  <title>Redirecting…</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Benchmarks — Active Reasoning Evaluation Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #050505;
+      --bg2: #0c0c0c;
+      --bg3: #141414;
+      --bg4: #1c1c1c;
+      --bg5: #202020;
+      --border: rgba(255, 255, 255, 0.07);
+      --border2: rgba(255, 255, 255, 0.12);
+      --green: #10a37f;
+      --green-lt: #1dc89a;
+      --white: #ffffff;
+      --gray: #8e8ea0;
+      --gray2: #5e5e72;
+      --gold: #f5c518;
+      --silver: #9aa3b2;
+      --bronze: #cd7f5a;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(5, 5, 5, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      background: var(--green) !important;
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background .2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--green-lt) !important;
+    }
+
+    /* ─── HERO ────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grid background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .028) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 20%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Glow */
+    .hero-glow {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(16, 163, 127, .2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 163, 127, .08);
+      border: 1px solid rgba(16, 163, 127, .28);
+      color: var(--green-lt);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .25
+      }
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(52px, 8.5vw, 100px);
+      font-weight: 900;
+      letter-spacing: -3.5px;
+      line-height: .93;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .w1 {
+      display: block;
+      background: linear-gradient(170deg, #fff 40%, rgba(255, 255, 255, .5) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero h1 .w2 {
+      display: block;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-lt) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      position: relative;
+      z-index: 1;
+      font-size: 17px;
+      color: var(--gray);
+      line-height: 1.75;
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--green-lt);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all .2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--bg3);
+      border-color: var(--border2);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--gray2);
+      font-size: 20px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding-bottom: 32px;
+    }
+
+    .scroll-line {
+      width: 3px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--gray2));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: .3
+      }
+
+      50% {
+        opacity: .8
+      }
+    }
+
+    /* ─── STATS STRIP ─────────────────────────── */
+    .stats-strip {
+      display: flex;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 32px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background .2s;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-item:hover {
+      background: var(--bg3);
+    }
+
+    /* accent line on hover */
+    .stat-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--green-lt));
+      transition: width .3s ease;
+    }
+
+    .stat-item:hover::after {
+      width: 60%;
+    }
+
+    .stat-icon {
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: block;
+      opacity: .7;
+    }
+
+    .stat-n {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1;
+      color: var(--white);
+      background: linear-gradient(160deg, #fff 40%, rgba(255, 255, 255, .6) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-n em {
+      font-style: normal;
+      color: var(--green);
+      background: linear-gradient(135deg, var(--green), var(--green-lt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-l {
+      font-size: 12px;
+      color: var(--gray2);
+      margin-top: 6px;
+      letter-spacing: .01em;
+    }
+
+    /* ─── BENTO SECTION ───────────────────────── */
+    .bento-wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 72px 48px 96px;
+    }
+
+    .bento-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .bento-header .sec-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .bento-header h2 {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
+
+    /* The bento grid */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto auto;
+      gap: 16px;
+    }
+
+    /* ── Base bento card ── */
+    .b-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      transition: border-color .25s, box-shadow .25s, transform .25s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .b-card:hover {
+      border-color: rgba(16, 163, 127, .35);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, .5);
+      transform: translateY(-3px);
+    }
+
+    .b-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+
+    .b-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Grid placements */
+    .b-puzzles {
+      grid-column: span 7;
+    }
+
+    .b-leaderboard {
+      grid-column: span 5;
+    }
+
+    .b-whiteboard {
+      grid-column: span 7;
+    }
+
+    .b-newsletter {
+      grid-column: span 5;
+    }
+
+    .b-community {
+      grid-column: span 5;
+    }
+
+    /* Padding presets */
+    .b-pad {
+      padding: 32px;
+    }
+
+    .b-pad-lg {
+      padding: 36px;
+    }
+
+    /* Card label */
+    .b-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+
+    .b-label .b-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+
+    /* Card heading */
+    .b-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.6px;
+      margin-bottom: 10px;
+    }
+
+    .b-card p.desc {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* Link row */
+    .b-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green);
+      margin-top: auto;
+      padding-top: 20px;
+      transition: gap .2s;
+    }
+
+    .b-card:hover .b-link {
+      gap: 10px;
+    }
+
+    /* ── PUZZLES CARD ── */
+    .b-puzzles .b-inner {
+      padding: 36px 36px 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .puzzle-tag-star {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .puzzle-mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .pm-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: border-color .2s;
+    }
+
+    .b-puzzles:hover .pm-card {
+      border-color: rgba(16, 163, 127, .2);
+    }
+
+    .pm-tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 5px;
+    }
+
+    .pm-title {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+
+    .pm-count {
+      font-size: 11px;
+      color: var(--gray2);
+      margin-top: 6px;
+    }
+
+    /* ── LEADERBOARD CARD ── */
+    .b-leaderboard .lb-header {
+      padding: 28px 28px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .b-leaderboard .lb-rows {
+      flex: 1;
+    }
+
+    .lb-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+
+    .lb-row:last-child {
+      border-bottom: none;
+    }
+
+    .b-leaderboard:hover .lb-row {
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .lb-rank {
+      font-size: 13px;
+      font-weight: 700;
+      width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .r1 {
+      color: var(--gold);
+    }
+
+    .r2 {
+      color: var(--silver);
+    }
+
+    .r3 {
+      color: var(--bronze);
+    }
+
+    .r-other {
+      color: var(--gray2);
+    }
+
+    .lb-model {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lb-model-name {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-model-org {
+      font-size: 11px;
+      color: var(--gray2);
+    }
+
+    .lb-score-wrap {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .lb-score {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -.5px;
+    }
+
+    .lb-score-bar {
+      width: 48px;
+      height: 3px;
+      background: var(--bg5);
+      border-radius: 2px;
+      margin-top: 4px;
+      margin-left: auto;
+    }
+
+    .lb-score-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--green), var(--green-lt));
+    }
+
+    .lb-footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lb-total {
+      font-size: 11px;
+      color: var(--gray2);
+    }
+
+    /* ── WHITEBOARD CARD ── */
+    .b-whiteboard .b-pad {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .upcoming-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green-lt);
+      background: rgba(16, 163, 127, .1);
+      border: 1px solid rgba(16, 163, 127, .2);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .upcoming-chip .dot {
+      width: 5px;
+      height: 5px;
+    }
+
+    .session-preview {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .sp-date {
+      font-size: 10px;
+      color: var(--gray2);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+
+    .sp-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    .sp-type {
+      display: inline-block;
+      font-size: 10px;
+      color: var(--green);
+      background: rgba(16, 163, 127, .1);
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    .session-count {
+      font-size: 12px;
+      color: var(--gray2);
+      margin-top: 16px;
+    }
+
+    /* ── NEWSLETTER CARD ── */
+    .b-newsletter .b-pad {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nl-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+      flex: 1;
+    }
+
+    .nl-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .nl-form input {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .nl-form input::placeholder {
+      color: var(--gray2);
+    }
+
+    .nl-form input:focus {
+      border-color: rgba(16, 163, 127, .5);
+    }
+
+    .nl-form button {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .2s;
+      text-align: center;
+    }
+
+    .nl-form button:hover {
+      background: var(--green-lt);
+    }
+
+    .nl-note {
+      font-size: 11px;
+      color: var(--gray2);
+      margin-top: 6px;
+    }
+
+    .nl-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .nl-perk {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .nl-perk-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .nl-perk-text h4 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .nl-perk-text p {
+      font-size: 12px;
+      color: var(--gray2);
+      line-height: 1.5;
+    }
+
+    /* ── COMMUNITY CARD ── */
+    .b-community {
+      background: linear-gradient(145deg, rgba(16, 163, 127, .12) 0%, rgba(16, 163, 127, .04) 100%);
+      border-color: rgba(16, 163, 127, .18) !important;
+    }
+
+    .b-community .b-pad {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .community-number {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      color: var(--green);
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+
+    .community-number em {
+      font-style: normal;
+      font-size: 28px;
+      color: var(--green-lt);
+    }
+
+    .community-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .c-badge {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gray2);
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 100px;
+    }
+
+    /* ─── DIVIDER & FOOTER ────────────────────── */
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 36px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .footer-logo em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray2);
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 1100px) {
+      .b-puzzles {
+        grid-column: span 12;
+      }
+
+      .b-leaderboard {
+        grid-column: span 12;
+      }
+
+      .b-whiteboard {
+        grid-column: span 12;
+      }
+
+      .b-newsletter {
+        grid-column: span 12;
+      }
+
+      .b-community {
+        grid-column: span 12;
+      }
+
+      .nl-split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        padding: 0 24px;
+      }
+
+      .nav-links li:not(:last-child) {
+        display: none;
+      }
+
+      .hero {
+        padding: 90px 24px 48px;
+      }
+
+      .bento-wrap {
+        padding: 48px 24px 72px;
+      }
+
+      .stats-strip {
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        min-width: 50%;
+      }
+
+      .puzzle-mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <p>If you are not redirected, <a href="https://github.com/interactivebench">click here</a>.</p>
-  <script>
-    window.location.href = "https://github.com/interactivebench";
-  </script>
+
+  <!-- ═══ NAV ═══════════════════════════════════════════ -->
+  <nav>
+    <a href="index.html" class="nav-logo">Interactive<em>Bench</em></a>
+    <ul class="nav-links">
+      <li><a href="puzzles.html">Benchmarks</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="whiteboard.html">Whiteboard</a></li>
+      <!-- <li><a href="newsletter.html">Newsletter</a></li> -->
+      <li><a href="https://github.com/interactivebench/interactivebench" class="nav-cta">GitHub →</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+
+    <div class="hero-badge">
+      <span class="dot"></span>
+      InteractiveBench &nbsp;·&nbsp; March 2026
+    </div>
+
+    <h1>
+      <span class="w1">Interactive</span>
+      <span class="w2">Benchmarks</span>
+    </h1>
+
+    <p class="hero-desc">
+      A unified evaluation paradigm that assesses LLMs' reasoning ability
+      through active information acquisition — spanning Interactive Proofs
+      (Logic &amp; Math) and Interactive Games (Poker &amp; Trust).
+    </p>
+
+    <div class="hero-actions">
+      <a href="puzzles.html" class="btn-primary">Explore Benchmarks →</a>
+      <a href="leaderboard.html" class="btn-outline">View Leaderboard</a>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ═══ STATS STRIP ══════════════════════════════════════ -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <span class="stat-icon">🤖</span>
+      <div class="stat-n">6</div>
+      <div class="stat-l">Frontier LLMs Evaluated</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">🧩</span>
+      <div class="stat-n">4</div>
+      <div class="stat-l">Benchmark Domains</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">📊</span>
+      <div class="stat-n">98</div>
+      <div class="stat-l">Benchmark Instances</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">♠️</span>
+      <div class="stat-n">5K<em>+</em></div>
+      <div class="stat-l">Poker Hands Simulated</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon">🏆</span>
+      <div class="stat-n">76.9<em>%</em></div>
+      <div class="stat-l">Best Math Accuracy</div>
+    </div>
+  </div>
+
+  <!-- ═══ BENTO GRID ══════════════════════════════════════ -->
+  <div class="bento-wrap">
+    <div class="bento-header">
+      <p class="sec-label">Evaluation Framework</p>
+      <h2>Two paradigms, four domains</h2>
+    </div>
+
+    <div class="bento">
+
+      <!-- ── 1. INTERACTIVE PUZZLES (7 cols, tall) ── -->
+      <a href="puzzles.html" class="b-card b-puzzles">
+        <div class="b-inner">
+          <span class="puzzle-tag-star">★ InteractiveBench · Mar 2026</span>
+          <div class="b-label"><span class="b-dot"></span>Interactive Proofs &amp; Games</div>
+          <h3>Interactive Benchmarks</h3>
+          <p class="desc">
+            A unified evaluation paradigm assessing LLMs' active information-acquisition ability
+            under budget constraints — covering abductive logic reasoning, mathematical solving,
+            strategic poker playing, and adaptive trust games simulating.
+          </p>
+          <div class="puzzle-mini-grid">
+            <div class="pm-card">
+              <div class="pm-tag">Logic · Interactive Proof</div>
+              <div class="pm-title">Situation Puzzle</div>
+              <div class="pm-count">46 instances · Best: Gemini 30.4%</div>
+            </div>
+            <div class="pm-card">
+              <div class="pm-tag">Math · Interactive Proof</div>
+              <div class="pm-title">HLE Math Problems</div>
+              <div class="pm-count">52 instances · Best: Grok 76.9%</div>
+            </div>
+            <div class="pm-card">
+              <div class="pm-tag">Poker · Interactive Game</div>
+              <div class="pm-title">Texas Hold'em</div>
+              <div class="pm-count">5,000 hands · Best: Gemini +31.8/hand</div>
+            </div>
+            <div class="pm-card">
+              <div class="pm-tag">Trust · Interactive Game</div>
+              <div class="pm-title">Iterated Prisoner's Dilemma</div>
+              <div class="pm-count">Round-robin · Best: Qwen3 1.867/round</div>
+            </div>
+          </div>
+          <span class="b-link">Explore all benchmarks →</span>
+        </div>
+      </a>
+
+      <!-- ── 2. LEADERBOARD (5 cols) ── -->
+      <a href="leaderboard.html" class="b-card b-leaderboard">
+        <div class="lb-header">
+          <div class="b-label"><span class="b-dot"></span>Rankings</div>
+          <h3 style="font-size:18px;letter-spacing:-.4px;">Interactive Benchmark<br>Leaderboard</h3>
+        </div>
+        <div class="lb-rows">
+          <div class="lb-row">
+            <span class="lb-rank r1">1</span>
+            <div class="lb-model">
+              <div class="lb-model-name">GPT-5-mini</div>
+              <div class="lb-model-org">OpenAI</div>
+            </div>
+            <div class="lb-score-wrap">
+              <div class="lb-score">77.9</div>
+              <div class="lb-score-bar">
+                <div class="lb-score-fill" style="width:100%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <span class="lb-rank r2">2</span>
+            <div class="lb-model">
+              <div class="lb-model-name">Grok-4.1-fast</div>
+              <div class="lb-model-org">xAI</div>
+            </div>
+            <div class="lb-score-wrap">
+              <div class="lb-score">76.7</div>
+              <div class="lb-score-bar">
+                <div class="lb-score-fill" style="width:98%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <span class="lb-rank r3">3</span>
+            <div class="lb-model">
+              <div class="lb-model-name">Gemini-3-flash</div>
+              <div class="lb-model-org">Google DeepMind</div>
+            </div>
+            <div class="lb-score-wrap">
+              <div class="lb-score">74.7</div>
+              <div class="lb-score-bar">
+                <div class="lb-score-fill" style="width:96%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <span class="lb-rank r-other">4</span>
+            <div class="lb-model">
+              <div class="lb-model-name">Qwen3-max</div>
+              <div class="lb-model-org">Alibaba</div>
+            </div>
+            <div class="lb-score-wrap">
+              <div class="lb-score">31.9</div>
+              <div class="lb-score-bar">
+                <div class="lb-score-fill" style="width:41%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <span class="lb-rank r-other">5</span>
+            <div class="lb-model">
+              <div class="lb-model-name">DeepSeek-v3.2</div>
+              <div class="lb-model-org">DeepSeek</div>
+            </div>
+            <div class="lb-score-wrap">
+              <div class="lb-score">21.3</div>
+              <div class="lb-score-bar">
+                <div class="lb-score-fill" style="width:27%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="lb-row">
+            <span class="lb-rank r-other">6</span>
+            <div class="lb-model">
+              <div class="lb-model-name">Kimi-k2-thinking</div>
+              <div class="lb-model-org">Moonshot AI</div>
+            </div>
+            <div class="lb-score-wrap">
+              <div class="lb-score">17.9</div>
+              <div class="lb-score-bar">
+                <div class="lb-score-fill" style="width:27%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lb-footer">
+          <span>View full leaderboard →</span>
+          <span class="lb-total">6 models · 4 domains · composite score</span>
+        </div>
+      </a>
+
+      <!-- ── 3. WHITEBOARD (4 cols) ── -->
+      <a href="whiteboard.html" class="b-card b-whiteboard">
+        <div class="b-pad">
+          <div class="b-label"><span class="b-dot"></span>Learn</div>
+          <h3>LLM Whiteboard<br>Sessions</h3>
+          <p class="desc">Latest news about our progress on Interactive Benchmarks.</p>
+
+          <div class="upcoming-chip">
+            <span class="dot"></span>
+            Latest Paper
+          </div>
+          <div class="session-preview">
+            <div class="sp-date">Mar 5, 2026 · InteractiveBench</div>
+            <div class="sp-title">Interactive Benchmarks: Evaluating LLMs via Active Information Acquisition</div>
+            <span class="sp-type">Open Access · arXiv:2603.04737</span>
+          </div>
+          <div class="session-count">4 benchmark domains · 6 frontier models →</div>
+
+          <span class="b-link">View all sessions →</span>
+        </div>
+      </a>
+
+      <!-- ── 4. NEWSLETTER (5 cols) ── -->
+      <!-- <a href="newsletter.html" class="b-card b-newsletter" onclick="return false;" style="cursor:default;">
+        <div class="b-pad">
+          <div class="b-label"><span class="b-dot"></span>Stay Updated</div>
+          <h3>InteractiveAGI<br>Mesh Newsletter</h3>
+
+          <div class="nl-split" style="margin-top:20px;">
+            <div class="nl-perks">
+              <div class="nl-perk">
+                <span class="nl-perk-icon">🔬</span>
+                <div class="nl-perk-text">
+                  <h4>Research Roundup</h4>
+                  <p>Top LLM papers, summarized weekly</p>
+                </div>
+              </div>
+              <div class="nl-perk">
+                <span class="nl-perk-icon">🏆</span>
+                <div class="nl-perk-text">
+                  <h4>Benchmark Results</h4>
+                  <p>Latest arena rankings & insights</p>
+                </div>
+              </div>
+              <div class="nl-perk">
+                <span class="nl-perk-icon">🧩</span>
+                <div class="nl-perk-text">
+                  <h4>Puzzle Spotlight</h4>
+                  <p>Featured community puzzle of the week</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="nl-form">
+                <input type="text" placeholder="Your name" onclick="event.stopPropagation()" />
+                <input type="email" placeholder="Email address" onclick="event.stopPropagation()" />
+                <button
+                  onclick="event.preventDefault();event.stopPropagation();window.location='newsletter.html'">Subscribe
+                  →</button>
+              </div>
+              <p class="nl-note">Weekly on Fridays · No spam · Free</p>
+            </div>
+          </div>
+        </div>
+      </a> -->
+
+      <!-- ── 5. COMMUNITY (3 cols) ── -->
+      <a href="https://github.com/interactivebench/interactivebench" class="b-card b-community">
+        <div class="b-pad">
+          <div class="b-label"><span class="b-dot"></span>Open Source</div>
+          <h3 style="font-size:18px;">InteractiveBench</h3>
+          <div class="community-number">6<em> L L M s</em></div>
+          <div class="community-number">4<em> D o m a i n s</em></div>
+          <p class="desc" style="font-size:13px;">Frontier models evaluated across logic, math, poker, and trust game
+            benchmarks.</p>
+          <div class="community-badges">
+            <span class="c-badge">GitHub</span>
+            <span class="c-badge">arXiv</span>
+            <span class="c-badge">Open Access</span>
+          </div>
+          <span class="b-link" style="margin-top:20px;">View on GitHub →</span>
+        </div>
+      </a>
+
+    </div><!-- /bento -->
+  </div><!-- /bento-wrap -->
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="footer">
+    <div class="footer-logo">Interactive<em>Bench</em></div>
+    <ul class="footer-links">
+      <li><a href="puzzles.html">Benchmarks</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="whiteboard.html">Whiteboard</a></li>
+      <!-- <li><a href="newsletter.html">Newsletter</a></li> -->
+      <li><a href="https://arxiv.org/abs/2603.04737">arXiv</a></li>
+      <li><a href="https://github.com/interactivebench/interactivebench">GitHub</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 InteractiveBench. All rights reserved.</div>
+  </div>
+
 </body>
+
 </html>
